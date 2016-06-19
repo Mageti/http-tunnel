@@ -13,10 +13,11 @@ will need a remote server outside of the firewall.
 
 Start the tunneld server on a remote machine. The server listens on a port
 specified by parameter `-p` for HTTP connection from a client program. 
+The `-s` parameter enables SSL.
 
-    python tunneld.py -p <listen_port> 
+    `python tunneld.py [-s] -p <listen_port>`
 
-The server then read the HTTP payload and send it to the target using TCP
+The server then reads the HTTP payload and sends it to the target using TCP
 connection. The target is specified by the client when establishing the tunnel. 
 
 Usually, tunneling will actually be useful when you use the default HTTP port
@@ -25,14 +26,16 @@ firewall.
 
 ### Tunnel Client 
 
-Start the tunnel client which listen on the local machine. The command needs
-local port parameter, the remote tunnel server and its port, and the target that the client want to connect to.
+Start the tunnel client which listens on the local machine. The command needs
+local port parameter, the remote tunnel server and its port, and the target that the client wants to connect to.
+The `-s` parameter enables SSL.
 
-    python tunnel.py -p <client_port> -r <tunnel_server_host>:<tunnel_server_port> <target_host>:<target_port>
+    `python tunnel.py -p <client_port> -r <tunnel_server_host>:<tunnel_server_port> <target_host>:<target_port>`
 
 When this command is executed, the client sends a http request to establish the
 tunnel with the remote tunnel server. The tunnel server will then establish
-a TCP connection with the target server. 
+a TCP connection with the target server. When you don't specify a port with the `-p` parameter, the client
+reads traffic from stdin and writes responses to stdout.
 
 ### Example
 
@@ -49,6 +52,10 @@ To connect to irc server using the tunnel:
     # send irc NICK command to the connection and see the response back from
     the irc server
     NICK abc
+
+To use the HTTP tunnel to encapsulate ssh connections:
+
+    `ssh user@host -o "ProxyCommand=python tunnel.py -r <tunnel_server_host:tunnel_server_port> -o <proxy_addr:proxy_port> %h:%p"`
 
 ## Credit: 
 

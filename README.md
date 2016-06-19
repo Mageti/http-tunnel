@@ -15,7 +15,7 @@ Start the tunneld server on a remote machine. The server listens on a port
 specified by parameter `-p` for HTTP connection from a client program. 
 The `-s` parameter enables SSL.
 
-    `python tunneld.py [-s] -p <listen_port>`
+    python tunneld.py [-s] -p <listen_port>
 
 The server then reads the HTTP payload and sends it to the target using TCP
 connection. The target is specified by the client when establishing the tunnel. 
@@ -30,7 +30,7 @@ Start the tunnel client which listens on the local machine. The command needs
 local port parameter, the remote tunnel server and its port, and the target that the client wants to connect to.
 The `-s` parameter enables SSL.
 
-    `python tunnel.py -p <client_port> -r <tunnel_server_host>:<tunnel_server_port> <target_host>:<target_port>`
+    python tunnel.py -p <client_port> -r <tunnel_server_host>:<tunnel_server_port> <target_host>:<target_port>
 
 When this command is executed, the client sends a http request to establish the
 tunnel with the remote tunnel server. The tunnel server will then establish
@@ -55,7 +55,7 @@ To connect to irc server using the tunnel:
 
 To use the HTTP tunnel to encapsulate ssh connections:
 
-    `ssh user@host -o "ProxyCommand=python tunnel.py -r <tunnel_server_host:tunnel_server_port> -o <proxy_addr:proxy_port> %h:%p"`
+    ssh user@host -o "ProxyCommand=python tunnel.py -r <tunnel_server_host:tunnel_server_port> -o <proxy_addr:proxy_port> %h:%p"
 
 ## Credit: 
 
